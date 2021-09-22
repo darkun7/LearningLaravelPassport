@@ -1,0 +1,165 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Learn Laravel Passport Auth",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://learnpassport.test/api/",
+            "description": "Laravel Swagger API server"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Create new user record",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BaseController": {
+                "title": "BaseResponse",
+                "description": "Base repsonse",
+                "properties": {
+                    "success": {
+                        "title": "success",
+                        "type": "boolean",
+                        "format": "int64",
+                        "example": true
+                    },
+                    "data": {
+                        "title": "data",
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    },
+                    "message": {
+                        "title": "message",
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BaseResponse"
+                }
+            },
+            "LoginRequest": {
+                "title": "LoginRequest",
+                "description": "Authenticate user by username (or email) and password",
+                "required": [
+                    "name",
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "title": "username",
+                        "type": "string"
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "description": "Create new user by register",
+                "required": [
+                    "name",
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "type": "string"
+                    },
+                    "username": {
+                        "title": "username",
+                        "type": "string"
+                    },
+                    "email": {
+                        "title": "email",
+                        "type": "string",
+                        "example": "test@mail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "X-APP-ID": {
+                "type": "apiKey",
+                "name": "X-APP-ID",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

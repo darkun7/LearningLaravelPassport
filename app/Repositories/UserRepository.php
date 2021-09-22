@@ -26,8 +26,8 @@ class UserRepository extends Repository
     {
         return $this->model->create([
             'name'     => $data['name'],
-            'username' => $data['username'],
-            'email'    => $data['email'],
+            'username' => strtolower($data['username']),
+            'email'    => strtolower($data['email']),
             'password' => Hash::make($data['password']),
         ]);
     }
@@ -37,9 +37,9 @@ class UserRepository extends Repository
      *
      * @param  string $column (email/username)
      * @param  string $value
-     * @return User
+     * @return mixed
      */
-    public function getUserByLoginType( $column, $value ) : User
+    public function getUserByLoginType( $column, $value )
     {
         return $this->model->where($column, $value )->first();
     }

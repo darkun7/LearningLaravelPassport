@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\BaseController;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use App\Http\Requests\Auth\RegisterRequest as Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\UserRepository;
@@ -28,24 +29,27 @@ class RegisterController extends BaseController
     |
     */
 
-    public function validator( array $data )
-    {
-        $rules = [
-            'name'=> 'required|string',
-            'username' => 'required|string|unique:users',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string'
-        ];
-        return Validator::make($data,$rules);
-    }
-
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     operationId="registerUser",
+     *     tags={"Authentication"},
+     *     summary="Create new user record",
+     *     @OA\Response(
+     *         response="200", description="Successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/RegisterRequest")
+     *      ),
+     * )
+     *
+     * @param \App\Http\Requests\Auth\RegisterRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register( Request $request )
     {
-        $validation = $this->validator($request->all());
-        if ($validation->fails()) {
-            return $this->sendError('Validation Error.', $validation->errors()->all(), 400);
-        }
-
         $user = $this->userRepository->create($request->all());
 
         Auth::attempt([
