@@ -16,7 +16,13 @@ class UserRepository extends Repository
         $this->model = new User;
     }
 
-    public function create( array $data )
+    /**
+     * create
+     *
+     * @param  array $data
+     * @return User
+     */
+    public function create( array $data ) : User
     {
         return $this->model->create([
             'name'     => $data['name'],
@@ -26,7 +32,14 @@ class UserRepository extends Repository
         ]);
     }
 
-    public function getUserByLoginType( $column, $value )
+    /**
+     * getUserByLoginType
+     *
+     * @param  string $column (email/username)
+     * @param  string $value
+     * @return User
+     */
+    public function getUserByLoginType( $column, $value ) : User
     {
         return $this->model->where($column, $value )->first();
     }

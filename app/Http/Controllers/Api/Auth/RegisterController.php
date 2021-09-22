@@ -32,7 +32,7 @@ class RegisterController extends BaseController
     {
         $rules = [
             'name'=> 'required|string',
-            'username' => 'required|string',
+            'username' => 'required|string|unique:users',
             'email' => 'required|string|unique:users',
             'password' => 'required|string'
         ];
@@ -58,7 +58,6 @@ class RegisterController extends BaseController
             [
                 'user' => Auth::user(),
                 'access_token' => $accessToken
-            ],
-            'User login successfully.',201);
+            ], __('response.SuccessStoreData'),201);
     }
 }
